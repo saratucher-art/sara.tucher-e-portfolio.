@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sara Tucher | E-Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --cream: #F8F5F0;
+  --sage-light: #E8EDE6;
+  --sage-mid: #C9D9C5;
+  --sage: #8FAE8B;
+  --sage-dark: #5C7A57;
+  --sage-deep: #3D5C3A;
+  --warm-white: #FDFCFA;
+  --text-dark: #2C2C2A;
+  --text-mid: #5C5C58;
+  --text-light: #9A9A94;
+  --border: rgba(95,122,87,0.18);
+  --border-soft: rgba(95,122,87,0.10);
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'DM Sans',sans-serif; background:var(--cream); color:var(--text-dark); min-height:100vh; }
+
+nav {
+  position:sticky; top:0; z-index:200;
+  background:rgba(248,245,240,0.96); backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  padding:0 2rem; display:flex; align-items:center; justify-content:space-between; height:60px;
+}
+.nav-logo { font-family:'Cormorant Garamond',serif; font-size:1.25rem; font-weight:400; letter-spacing:0.04em; color:var(--sage-deep); cursor:pointer; }
+.nav-links { display:flex; gap:0.1rem; list-style:none; flex-wrap:wrap; }
+.nav-links li a {
+  font-size:0.72rem; font-weight:400; letter-spacing:0.07em; text-transform:uppercase;
+  color:var(--text-mid); text-decoration:none; padding:0.38rem 0.65rem;
+  border-radius:20px; transition:all 0.2s; cursor:pointer; white-space:nowrap;
+}
+.nav-links li a:hover, .nav-links li a.active { background:var(--sage-light); color:var(--sage-deep); }
+
+.page { display:none; }
+.page.active { display:block; animation:fadeUp 0.4s ease both; }
+@keyframes fadeUp { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:translateY(0)} }
+
+/* HERO */
+.hero { padding:6.5rem 2.5rem 5rem; max-width:900px; margin:0 auto; }
+.hero-label { font-size:0.68rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--sage); margin-bottom:1.5rem; }
+.hero h1 { font-family:'Cormorant Garamond',serif; font-size:clamp(2.7rem,5.5vw,4.7rem); font-weight:300; line-height:1.06; margin-bottom:2rem; }
+.hero h1 em { font-style:italic; color:var(--sage-dark); }
+.hero-line { width:52px; height:1.5px; background:var(--sage); margin-bottom:2rem; }
+.hero-bio { font-size:1rem; line-height:1.88; color:var(--text-mid); max-width:680px; font-weight:300; }
+.hero-bio p + p { margin-top:1.2rem; }
+.contact-strip { margin-top:3.5rem; padding-top:2rem; border-top:1px solid var(--border); display:flex; gap:2.5rem; flex-wrap:wrap; }
+.contact-item { display:flex; flex-direction:column; gap:0.25rem; }
+.contact-label { font-size:0.64rem; letter-spacing:0.14em; text-transform:uppercase; color:var(--sage); }
+.contact-value { font-size:0.87rem; color:var(--text-dark); text-decoration:none; }
+.contact-value:hover { color:var(--sage-dark); }
+
+/* SECTION */
+.section-page { max-width:1060px; margin:0 auto; padding:5rem 2rem 7rem; }
+.section-header { margin-bottom:3.5rem; }
+.section-tag { font-size:0.66rem; letter-spacing:0.18em; text-transform:uppercase; color:var(--sage); margin-bottom:0.7rem; }
+.section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.85rem,3.8vw,2.8rem); font-weight:300; color:var(--text-dark); line-height:1.1; margin-bottom:1rem; }
+.section-title em { font-style:italic; color:var(--sage-dark); }
+.section-desc { font-size:0.91rem; color:var(--text-mid); max-width:570px; line-height:1.78; font-weight:300; }
+
+/* CARDS */
+.cards-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:1.4rem; }
+.cards-grid.cols-2 { grid-template-columns:repeat(auto-fit,minmax(360px,1fr)); }
+.cards-grid.cols-3 { grid-template-columns:repeat(auto-fit,minmax(270px,1fr)); }
+
+.card {
+  background:var(--warm-white); border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; cursor:pointer;
+  transition:transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  display:flex; flex-direction:column;
+}
+.card:hover { transform:translateY(-4px); box-shadow:0 10px 34px rgba(61,92,58,0.10); border-color:var(--sage); }
+
+.card-image { height:155px; display:flex; align-items:center; justify-content:center; position:relative; overflow:hidden; }
+.card-image.law    { background:linear-gradient(135deg,#E8EDE6,#D2E0CE); }
+.card-image.psych  { background:linear-gradient(135deg,#EDE8E6,#E0D4D0); }
+.card-image.voice  { background:linear-gradient(135deg,#E6EAE8,#D0DBD5); }
+.card-image.ideas  { background:linear-gradient(135deg,#EAE8ED,#D5D0DC); }
+.card-image.civic  { background:linear-gradient(135deg,#E6EDE8,#CDDECF); }
+.card-image.beyond { background:linear-gradient(135deg,#E6E9ED,#CDD3DE); }
+.card-image.blog   { background:linear-gradient(135deg,#EDE6EA,#DDD0D8); }
+
+.card-icon { width:48px; height:48px; opacity:0.42; }
+.card-pill {
+  position:absolute; top:0.8rem; left:0.8rem;
+  font-size:0.6rem; letter-spacing:0.12em; text-transform:uppercase;
+  color:var(--sage-deep); background:rgba(248,245,240,0.88);
+  padding:0.26rem 0.55rem; border-radius:20px;
+}
+.card-body { padding:1.3rem 1.4rem 1.55rem; flex:1; display:flex; flex-direction:column; }
+.card-title { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:400; color:var(--text-dark); margin-bottom:0.52rem; line-height:1.25; }
+.card-blurb { font-size:0.838rem; color:var(--text-mid); line-height:1.72; font-weight:300; flex:1; }
+.card-footer { margin-top:1rem; display:flex; align-items:center; justify-content:space-between; }
+.card-type { font-size:0.63rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--sage); }
+.card-arr {
+  width:25px; height:25px; border-radius:50%; border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  font-size:0.72rem; color:var(--sage-dark); flex-shrink:0;
+  transition:background 0.2s, border-color 0.2s;
+}
+.card:hover .card-arr { background:var(--sage-light); border-color:var(--sage); }
+
+/* BLOG THREADS */
+.thread-card {
+  background:var(--warm-white); border:1px solid var(--border); border-radius:14px;
+  overflow:hidden; margin-bottom:1.2rem; transition:border-color 0.2s;
+}
+.thread-card:hover { border-color:var(--sage); }
+.thread-header { display:flex; align-items:center; justify-content:space-between; padding:1.35rem 1.55rem; gap:1rem; cursor:pointer; }
+.thread-meta { flex:1; }
+.thread-tag { font-size:0.6rem; letter-spacing:0.13em; text-transform:uppercase; color:var(--sage); margin-bottom:0.38rem; }
+.thread-name { font-family:'Cormorant Garamond',serif; font-size:1.18rem; font-weight:400; color:var(--text-dark); }
+.thread-sub { font-size:0.81rem; color:var(--text-mid); font-weight:300; margin-top:0.28rem; }
+.thread-chev {
+  width:27px; height:27px; border-radius:50%; border:1px solid var(--border);
+  display:flex; align-items:center; justify-content:center;
+  color:var(--sage-dark); font-size:0.78rem; flex-shrink:0;
+  transition:transform 0.3s, background 0.2s;
+}
+.thread-card.open .thread-chev { transform:rotate(180deg); background:var(--sage-light); border-color:var(--sage); }
+.thread-body { display:none; border-top:1px solid var(--border); }
+.thread-card.open .thread-body { display:block; }
+.thread-post { padding:1.7rem 1.7rem 1.9rem; }
+.thread-post + .thread-post { border-top:1px solid var(--border-soft); }
+.post-date { font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--sage); margin-bottom:0.55rem; }
+.post-title { font-family:'Cormorant Garamond',serif; font-size:1.08rem; font-weight:400; color:var(--text-dark); margin-bottom:0.9rem; }
+.post-text { font-size:0.87rem; line-height:1.82; color:var(--text-mid); font-weight:300; }
+.post-text p + p { margin-top:0.85rem; }
+.post-link {
+  display:inline-block; margin-top:0.9rem; font-size:0.76rem; letter-spacing:0.07em; text-transform:uppercase;
+  color:var(--sage-dark); text-decoration:none; border-bottom:1px solid var(--sage-mid); padding-bottom:1px;
+  transition:color 0.2s, border-color 0.2s;
+}
+.post-link:hover { color:var(--sage-deep); border-color:var(--sage-dark); }
+
+/* DELIB TWO-COL */
+.two-col { display:grid; grid-template-columns:1fr 1fr; gap:1.4rem; margin-top:1.5rem; }
+@media(max-width:620px){ .two-col{grid-template-columns:1fr;} }
+.doc-card { background:var(--warm-white); border:1px solid var(--border); border-radius:12px; padding:1.5rem; cursor:pointer; transition:border-color 0.2s, transform 0.2s; }
+.doc-card:hover { border-color:var(--sage); transform:translateY(-2px); }
+.doc-card h4 { font-family:'Cormorant Garamond',serif; font-size:1.08rem; font-weight:400; color:var(--text-dark); margin-bottom:0.48rem; }
+.doc-card p { font-size:0.83rem; color:var(--text-mid); line-height:1.7; font-weight:300; }
+.doc-link { display:inline-block; margin-top:0.85rem; font-size:0.72rem; letter-spacing:0.08em; text-transform:uppercase; color:var(--sage-dark); border-bottom:1px solid var(--sage-mid); padding-bottom:1px; }
+
+/* DETAIL */
+.essay-page { max-width:730px; margin:0 auto; padding:4.5rem 2rem 8rem; }
+.back-btn { display:inline-flex; align-items:center; gap:0.5rem; font-size:0.74rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--sage-dark); cursor:pointer; margin-bottom:2.8rem; background:none; border:none; transition:gap 0.2s; }
+.back-btn:hover { gap:0.75rem; }
+.essay-tag { font-size:0.64rem; letter-spacing:0.16em; text-transform:uppercase; color:var(--sage); margin-bottom:0.65rem; }
+.essay-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.75rem,3.5vw,2.6rem); font-weight:300; color:var(--text-dark); line-height:1.1; margin-bottom:0.9rem; }
+.essay-title em { font-style:italic; color:var(--sage-dark); }
+.essay-blurb { font-size:0.91rem; color:var(--text-mid); line-height:1.82; margin-bottom:2.2rem; padding-bottom:2.2rem; border-bottom:1px solid var(--border); font-weight:300; }
+.essay-body { font-size:0.91rem; line-height:1.87; color:var(--text-mid); font-weight:300; }
+.essay-body p + p { margin-top:0.95rem; }
+.essay-body h3 { font-family:'Cormorant Garamond',serif; font-size:1.12rem; font-weight:400; color:var(--text-dark); margin:2rem 0 0.65rem; }
+
+.embed-box { background:var(--sage-light); border:1px solid var(--sage-mid); border-radius:12px; padding:1.6rem; margin:1.8rem 0; }
+.embed-label { font-size:0.63rem; letter-spacing:0.12em; text-transform:uppercase; color:var(--sage-dark); margin-bottom:0.7rem; }
+.embed-box iframe { width:100%; border:none; border-radius:8px; display:block; }
+
+footer { background:var(--sage-deep); padding:2.5rem 2rem; text-align:center; }
+footer p { font-size:0.76rem; color:rgba(255,255,255,0.42); letter-spacing:0.05em; }
+footer a { color:rgba(255,255,255,0.62); text-decoration:none; }
+footer a:hover { color:rgba(255,255,255,0.9); }
+
+@media(max-width:640px){
+  nav{padding:0 1rem;}
+  .nav-links li a{padding:0.32rem 0.42rem;font-size:0.64rem;}
+  .hero,.section-page,.essay-page{padding-left:1.2rem;padding-right:1.2rem;}
+  .hero{padding-top:3.5rem;}
+  .cards-grid,.cards-grid.cols-2,.cards-grid.cols-3{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo" onclick="showPage('home')">Sara Tucher</span>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('law')" id="nav-law">Law &amp; Justice</a></li>
+    <li><a onclick="showPage('voice')" id="nav-voice">Finding My Voice</a></li>
+    <li><a onclick="showPage('ideas')" id="nav-ideas">Evolving Ideas</a></li>
+    <li><a onclick="showPage('delib')" id="nav-delib">Deliberation</a></li>
+    <li><a onclick="showPage('blog')" id="nav-blog">Blog Chronicles</a></li>
+    <li><a onclick="showPage('beyond')" id="nav-beyond">Beyond RCL</a></li>
+  </ul>
+</nav>
+
+<!-- HOME -->
+<div id="page-home" class="page active">
+  <div class="hero">
+    <p class="hero-label">E-Portfolio &middot; Penn State University &middot; RCL</p>
+    <h1>Words, <em>Arguments,</em><br>and the Art of<br><em>Being Heard</em></h1>
+    <div class="hero-line"></div>
+    <div class="hero-bio">
+      <p>When I arrived at Penn State as a Criminology and Psychology double major, I knew I cared about justice, but I had not yet found the language for why or how. Rhetoric and Civic Life gave me that language. Over this past year I have come to understand rhetoric not as a set of persuasion tricks, but as the fundamental architecture of public life: the way we build meaning together, establish trust across difference, and make claims that hold others accountable.</p>
+      <p>Eyewitness testimony, criminal justice reform, the science of memory, student wellness, civic deliberation, these were my laboratories this year. Through essays, podcasts, advocacy projects, and deliberations, I learned that effective communication is never just about what you say. It is about how your audience hears it, what you ask them to feel, and what you invite them to do next. Rhetoric is the bridge between individual voice and collective change.</p>
+      <p>I am a musician who plays flute, piccolo, and cello, a member of the Pride of the Lions pep band, and someone originally from a small town called California just outside Pittsburgh. Above all, I am someone who believes that the law is only as just as the arguments we make for it. This portfolio is my attempt to make those arguments well, and to show how one year of writing, speaking, and thinking changed the way I see the world.</p>
+    </div>
+    <div class="contact-strip">
+      <div class="contact-item">
+        <span class="contact-label">Student</span>
+        <span class="contact-value">Penn State University &middot; Class of 2028</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Majors</span>
+        <span class="contact-value">Criminology and Psychology &middot; Sociology Minor</span>
+      </div>
+      <div class="contact-item">
+        <span class="contact-label">Email</span>
+        <a class="contact-value" href="mailto:sjt6067@psu.edu">sjt6067@psu.edu</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- LAW & JUSTICE -->
+<div id="page-law" class="page">
+  <div class="section-page">
+    <div class="section-header">
+      <p class="section-tag">RCL &middot; Advocacy and Civic Issues</p>
+      <h2 class="section-title">Law, Justice, <em>and the Case for Reform</em></h2>
+      <p class="section-desc">The work I am most proud of centers on criminal justice, police accountability, and transparency in the legal system. These pieces represent who I am as a pre-law student and what I believe rhetoric is ultimately for: holding power accountable.</p>
+    </div>
+    <div class="cards-grid cols-2">
+
+      <div class="card" onclick="showEssay('advocacy')">
+        <div class="card-image law">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none"><circle cx="24" cy="24" r="18" stroke="#5C7A57" stroke-width="1.4"/><path d="M16 24h16M24 16v16" stroke="#5C7A57" stroke-width="1.3" stroke-linecap="round"/><path d="M13 31l4-9 6 5 5-7 7 11" stroke="#5C7A57" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="card-pill">Advocacy Project</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">On the Record: Mandating Continuous Police Recording</h3>
+          <p class="card-blurb">A multi-modal advocacy campaign calling for mandatory uninterrupted recording of all police interrogations and encounters. When there is no complete record, the door opens to misinterpretation and injustice. Accountability requires a witness.</p>
+          <div class="card-footer"><span class="card-type">Multimedia Advocacy Site</span><span class="card-arr">&#8594;</span></div>
+        </div>
+      </div>
+
+      <div class="card" onclick="showEssay('history')">
+        <div class="card-image civic">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none"><rect x="8" y="12" width="32" height="24" rx="2" stroke="#5C7A57" stroke-width="1.4"/><path d="M15 19h18M15 24h12M15 30h7" stroke="#5C7A57" stroke-width="1.1" stroke-linecap="round"/></svg>
+          <span class="card-pill">Public Controversy</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">History of a Public Controversy: Standardized Testing</h3>
+          <p class="card-blurb">A multimedia project tracing the history, rhetoric, and legitimacy of standardized testing in America. If COVID proved we could measure student potential another way, why did we go back to the old standard?</p>
+          <div class="card-footer"><span class="card-type">Multimedia &middot; YouTube</span><span class="card-arr">&#8594;</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FINDING MY VOICE -->
+<div id="page-voice" class="page">
+  <div class="section-page">
+    <div class="section-header">
+      <p class="section-tag">RCL &middot; Personal Narrative</p>
+      <h2 class="section-title"><em>This I Believe:</em> Finding My Voice</h2>
+      <p class="section-desc">The most personal work of my year. A reflection on belief, identity, and the thing I return to when everything else feels uncertain.</p>
+    </div>
+    <div class="cards-grid cols-2">
+      <div class="card" onclick="showEssay('thisIBelieve')">
+        <div class="card-image voice">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M24 8a10 10 0 0 1 10 10v6H14v-6A10 10 0 0 1 24 8z" stroke="#5C7A57" stroke-width="1.4"/><rect x="11" y="24" width="26" height="4" rx="2" stroke="#5C7A57" stroke-width="1.2"/><path d="M24 28v8M20 36h8" stroke="#5C7A57" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="card-pill">Essay and Podcast</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">This I Believe: The Importance of Music</h3>
+          <p class="card-blurb">A personal essay and recorded podcast in the tradition of NPR's beloved series. From a seventh-grade audition to a cathedral in Ireland, music taught me that being loud is not a flaw. It is a gift.</p>
+          <div class="card-footer"><span class="card-type">Essay and Audio</span><span class="card-arr">&#8594;</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- EVOLVING IDEAS -->
+<div id="page-ideas" class="page">
+  <div class="section-page">
+    <div class="section-header">
+      <p class="section-tag">RCL &middot; Paradigm Shift Essay</p>
+      <h2 class="section-title">When <em>Seeing Is No Longer Believing</em></h2>
+      <p class="section-desc">An examination of how our relationship to truth has shifted across three eras of evidence: human memory, photography, and artificial intelligence. What happens to justice when anything can be faked?</p>
+    </div>
+    <div class="cards-grid cols-2">
+      <div class="card" onclick="showEssay('paradigm')">
+        <div class="card-image ideas">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M8 24c0-8.837 7.163-16 16-16s16 7.163 16 16-7.163 16-16 16" stroke="#5C7A57" stroke-width="1.4" stroke-linecap="round"/><path d="M24 8v5M24 35v5M8 24H13M35 24h5" stroke="#5C7A57" stroke-width="1.1" stroke-linecap="round"/><circle cx="24" cy="24" r="4" stroke="#5C7A57" stroke-width="1.2"/></svg>
+          <span class="card-pill">CAS 137H Essay</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">The Illusion of Evidence</h3>
+          <p class="card-blurb">From eyewitness accounts to photographs to AI-generated deepfakes, this essay traces how courts and culture have defined truth across three eras, and why "seeing is believing" can no longer be the foundation of justice.</p>
+          <div class="card-footer"><span class="card-type">Analytical Essay</span><span class="card-arr">&#8594;</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DELIBERATION -->
+<div id="page-delib" class="page">
+  <div class="section-page">
+    <div class="section-header">
+      <p class="section-tag">RCL &middot; Deliberation and Civic Engagement</p>
+      <h2 class="section-title">Happy Valley, <em>Are We Really?</em></h2>
+      <p class="section-desc">A structured class deliberation on health and wellness at Penn State, followed by a formal letter to university leadership. These two documents represent the full arc of civic dialogue: researching the issue, deliberating openly, and taking action.</p>
+    </div>
+    <div class="two-col">
+      <div class="doc-card" onclick="showEssay('brief')">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="margin-bottom:0.7rem;opacity:0.5"><rect x="3" y="2" width="20" height="22" rx="2" stroke="#5C7A57" stroke-width="1.1"/><path d="M7 8h12M7 12h12M7 16h8" stroke="#5C7A57" stroke-width="0.9" stroke-linecap="round"/></svg>
+        <h4>Deliberation Issue Brief</h4>
+        <p>The research foundation for our class deliberation on student health and wellness at Penn State, mapping all three approaches before entering structured public dialogue.</p>
+        <span class="doc-link">Read the brief &#8594;</span>
+      </div>
+      <div class="doc-card" onclick="showEssay('postdelib')">
+        <svg width="26" height="26" viewBox="0 0 26 26" fill="none" style="margin-bottom:0.7rem;opacity:0.5"><path d="M3 5h16a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H7l-4 4V7a2 2 0 0 1 0-2z" stroke="#5C7A57" stroke-width="1.1" stroke-linejoin="round"/></svg>
+        <h4>Post-Deliberation Letter</h4>
+        <p>A formal letter to President Bendapudi and the Board of Trustees, summarizing what our deliberation revealed about academic pressure, community, and campus resources.</p>
+        <span class="doc-link">Read the letter &#8594;</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BLOG CHRONICLES -->
+<div id="page-blog" class="page">
+  <div class="section-page">
+    <div class="section-header">
+      <p class="section-tag">RCL &middot; All Five Blog Threads</p>
+      <h2 class="section-title">The <em>Blog Chronicles</em></h2>
+      <p class="section-desc">Five threads, ten posts, one year of thinking out loud. Click any thread to read the two posts I am most proud of from that series.</p>
+    </div>
+
+    <!-- PASSION -->
+    <div class="thread-card" id="tc-passion">
+      <div class="thread-header" onclick="toggleThread('passion')">
+        <div class="thread-meta">
+          <p class="thread-tag">Passion Blog &middot; Music and Performance</p>
+          <p class="thread-name">DCI Diaries: Breaking Down the Best Shows in Drum Corps</p>
+          <p class="thread-sub">Two posts analyzing championship DCI performances through a musician's eye.</p>
+        </div>
+        <span class="thread-chev" id="chev-passion">&#8964;</span>
+      </div>
+      <div class="thread-body" id="body-passion">
+        <div class="thread-post">
+          <p class="post-date">September 11, 2025</p>
+          <h3 class="post-title">PAS 1: Starting Off with a... BOOM!</h3>
+          <div class="post-text">
+            <p>There is something about Drum Corps that never quite leaves your system. Once a band kid, always a band kid, and I say that with full pride. In this blog thread I will be analyzing DCI (Drum Corps International) winning shows, the kind of performances that leave you with chills, in awe, and occasionally in tears. DCI is essentially the elite league of marching music: top-tier ensembles made up of mostly brass, percussion, and color guard performing incredibly complex shows with Olympic-level precision, beautiful storytelling, and jaw-dropping visuals. If marching band had a Super Bowl, this would be it.</p>
+            <p>This past DCI season (2025), the Boston Crusaders came out swinging and winning with their 2025 championship show entitled "BOOM." From the very first note to the final rifle toss, the entire performance was an explosion of sounds, colors, and immense energy. What stood out most was that stunning mellophone feature. The Boston Crusaders gave their mello line real moments to shine, with crazy articulated phrases that cut right through the texture of the ensemble. And even more impressive: they all played each other's mellophones. What really pushed "BOOM." over the edge was the overall general effect. Everything from the music to the movements to the emotional arc was all connected into one seamless show.</p>
+            <a class="post-link" href="https://www.youtube.com/watch?v=m3nt9O7KMAI" target="_blank">Watch BOOM on YouTube &#8594;</a>
+          </div>
+        </div>
+        <div class="thread-post">
+          <p class="post-date">October 2, 2025</p>
+          <h3 class="post-title">PAS 2: The Blue Devils and the Art of "The Cut-Outs"</h3>
+          <div class="post-text">
+            <p>Welcome back. This week I want to take you back to 2023, when the Blue Devils cemented their place in history by winning the DCI World Championship with their show "The Cut-Outs." It was not just a victory, it was their third in a row, and their 21st overall.</p>
+            <p>What made The Cut-Outs so special was its artistic foundation. Inspired by Henri Matisse's cut-paper collages, the show brought visual art to life on the field. The Blue Devils layered colors, sounds, and movement in such a masterful way that the show became a living piece of art. I will admit: it was Sinnerman by The Cavaliers that stole my heart in 2023. The raw power of Nina Simone's voice? Unmatched. The choreography, the brass, it was a storm of absolute perfection. It still gives me chills. But execution really matters in DCI, and that is where the Blue Devils are unrivaled. Every set change: effortless. Every musical phrase: polished to perfection.</p>
+            <a class="post-link" href="https://www.youtube.com/watch?v=lzIBVG2hytc" target="_blank">Watch The Cut-Outs &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RCL BLOGS -->
+    <div class="thread-card" id="tc-rcl">
+      <div class="thread-header" onclick="toggleThread('rcl')">
+        <div class="thread-meta">
+          <p class="thread-tag">Rhetoric and Civic Life &middot; Rhetorical Analysis</p>
+          <p class="thread-name">What Does Rhetoric Actually Look Like?</p>
+          <p class="thread-sub">Two posts analyzing rhetoric in everyday objects and presentations.</p>
+        </div>
+        <span class="thread-chev" id="chev-rcl">&#8964;</span>
+      </div>
+      <div class="thread-body" id="body-rcl">
+        <div class="thread-post">
+          <p class="post-date">October 17, 2025</p>
+          <h3 class="post-title">RCL 4: What Is That in Freedom Units?</h3>
+          <div class="post-text">
+            <p>At first glance, this shirt just looks like a joke: a classic piece of F1 fan culture featuring Logan Sargeant against an aggressively patriotic background. The text "What the F*** is a Kilometer" screams American pride and ignorance all at once. Underneath the humor, this slogan taps into something deeply woven into our culture: America's ongoing cultural resistance to global norms, and the way nationalism shapes even the most trivial aspects of everyday life, like how we measure our height.</p>
+            <p>The message is intentionally blunt. It is not trying to argue with data, history, or logic. It is all ethos and emotion. Logically, the slogan does not argue for anything, it does not claim miles are better or the metric system is bad. But it operates as a micro-argument for cultural exceptionalism dressed up in humor. It invites people to laugh with the joke if they share that mindset, or laugh at it if they recognize how ridiculous it sounds. Either way, it sparks a conversation. It condenses a centuries-long clash between global standardization and national pride into six chaotic words.</p>
+          </div>
+        </div>
+        <div class="thread-post">
+          <p class="post-date">October 25, 2025</p>
+          <h3 class="post-title">RCL 5: Are You Sure It's a Free Choice?</h3>
+          <div class="post-text">
+            <p>In his TED Talk, psychological illusionist Derren Brown challenges how we think about belief, decision-making, and free will. The central theme is that human thought and behavior are far more influenced by suggestion and subtle psychological cues than most of us realize. His paradigm shift is a call to move away from the idea that our beliefs and choices are purely self-determined, and to instead recognize the fragile, constructed nature of human perception.</p>
+            <p>Through live demonstrations, Brown shows how participants' memories and decisions can be manipulated without them realizing it, revealing just how limited our conscious control can be. This completely reframed my understanding of belief systems. This talk is also a masterclass in presentation skills. His style is confident yet conversational, and his pacing keeps the audience hooked through curiosity and suspense. He relies on live psychological demonstrations rather than slides or data points, making the presentation feel like a shared experience rather than a lecture.</p>
+            <a class="post-link" href="https://www.youtube.com/watch?v=2IFa0tqHrwE" target="_blank">Watch Derren Brown's TED Talk &#8594;</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PERSONAL IS POLITICAL -->
+    <div class="thread-card" id="tc-pip">
+      <div class="thread-header" onclick="toggleThread('pip')">
+        <div class="thread-meta">
+          <p class="thread-tag">Personal Is Political &middot; Gender, Biology, and Power</p>
+          <p class="thread-name">Free Range: The Personal Is Political</p>
+          <p class="thread-sub">Two posts on gender expectations in the workplace and how biology becomes political.</p>
+        </div>
+        <span class="thread-chev" id="chev-pip">&#8964;</span>
+      </div>
+      <div class="thread-body" id="body-pip">
+        <div class="thread-post">
+          <p class="post-date">January 30, 2026</p>
+          <h3 class="post-title">PiP 2: Expectations Matter</h3>
+          <div class="post-text">
+            <p>We are talking about expectations today. Not the ones you put on yourself at 2 a.m., but the ones society hands you the moment you walk into the workplace and exist as a woman. That unspoken expectation of "of course you'll do that." The kind that will not show up in the job description but will definitely shape your entire shift.</p>
+            <p>When I worked at Express, these expectations were subtle but non-stop. I was a manager, a position I had to work 10x harder for than any man there, but my daily tasks were often associate-level work: folding clothes, cleaning displays, organizing fitting rooms. Meanwhile, the men were more often asked to handle anything that looked authoritative or required physical strength. None of this was stated policy, but it happened often enough to feel normal. What really made it apparent was how customers interacted with us. Despite being a manager, customers regularly looked past me to ask male employees about policies and decisions I was responsible for. It was not hostility. It was assumption. And that is the whole point: misogyny in the workplace does not always look like open discrimination. It often looks like assumptions, habits, and who people instinctively trust.</p>
+          </div>
+        </div>
+        <div class="thread-post">
+          <p class="post-date">February 13, 2026</p>
+          <h3 class="post-title">PiP 4: How (Bio)LOGICAL Is It???</h3>
+          <div class="post-text">
+            <p>We like to say everyone is treated equally, that justice is blind, and that who you are should not matter. But in reality, how you look, what your body shape is, even your genetics often shape how people interpret your behavior before you ever say a word. Biology has become less of a scientific topic and more of a social filter.</p>
+            <p>Two people can display the exact same behavior, and it is not interpreted the same way. One person is seen as dangerous. Another as troubled. One gets punishment, another gets treatment. Because biology does not exist in a vacuum. It is interpreted through social perceptions like appearance, race, and gender. This matters deeply in the criminal justice system. What starts as a biological difference becomes a social outcome. Biology itself is neutral. A brain injury, hormone levels, a genetic predisposition are simply facts. What is not neutral is the meaning we attach to them. When those meanings vary across groups, biology stops being purely biological and starts becoming political. Biology shapes behavior, but society shapes consequences.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- WORK IN PROGRESS -->
+    <div class="thread-card" id="tc-wip">
+      <div class="thread-header" onclick="toggleThread('wip')">
+        <div class="thread-meta">
+          <p class="thread-tag">Work in Progress &middot; Advocacy Research</p>
+          <p class="thread-name">Building the Case: AI, Evidence, and Recording the Truth</p>
+          <p class="thread-sub">Two posts documenting the research and development of my advocacy project.</p>
+        </div>
+        <span class="thread-chev" id="chev-wip">&#8964;</span>
+      </div>
+      <div class="thread-body" id="body-wip">
+        <div class="thread-post">
+          <p class="post-date">March 28, 2026</p>
+          <h3 class="post-title">WiP 3: The New Age of Artificial Intelligence</h3>
+          <div class="post-text">
+            <p>The United States Congress should pass federal legislation regulating the use of artificial intelligence in the legal system by requiring transparency in AI tools and establishing clear standards for admissible digital evidence. The regulation of AI in the legal system is an increasingly urgent issue as technology advances faster than the laws designed to govern it. Without proper regulation, AI tools may contribute to privacy violations, wrongful convictions, and the use of unreliable evidence like deepfakes.</p>
+            <p>I am particularly interested in this topic because I plan to pursue a career in law, and I want to understand how emerging technologies will shape the future of the justice system. AI is already being integrated into legal processes, from predictive policing to evidence analysis, yet there is a lack of consistent standards and oversight. One major misconception about AI in the legal system is that it is inherently objective and unbiased. In reality, AI systems are only as reliable as the data they are trained on, and they can reinforce existing biases or produce inaccurate results.</p>
+          </div>
+        </div>
+        <div class="thread-post">
+          <p class="post-date">April 16, 2026</p>
+          <h3 class="post-title">WiP 5: Photos or It Didn't Happen</h3>
+          <div class="post-text">
+            <p>For my Advocacy Project, I chose to focus on the mandatory recording of all police interrogations and encounters, specifically advocating for policies that require continuous, start-to-finish recording. This cause is particularly important because it directly impacts the fairness and transparency of the legal system. Without clear, objective evidence of what happens during police interactions, situations can quickly become a matter of one person's word against another's, opening the door to misunderstanding, misinterpretation, and serious injustices like false confessions or wrongful convictions.</p>
+            <p>Recording interrogations and encounters helps address these issues by providing an unbiased, factual account of what actually occurred. It protects individuals from coercion during questioning, while also protecting law enforcement from false accusations. It is not about targeting police. It is about strengthening trust, accountability, and accuracy within our system as a whole. By promoting mandatory recording policies, I hope to emphasize that justice is not just about court outcomes but about ensuring the entire process is fair, transparent, and as trustworthy as possible.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CIVIC ISSUES -->
+    <div class="thread-card" id="tc-ci">
+      <div class="thread-header" onclick="toggleThread('ci')">
+        <div class="thread-meta">
+          <p class="thread-tag">Civic Issues &middot; The American Legal System</p>
+          <p class="thread-name">Justice... or Just a Really Good Illusion?</p>
+          <p class="thread-sub">Two posts from a five-part series examining eyewitness testimony, jury bias, and the gaps in our legal system.</p>
+        </div>
+        <span class="thread-chev" id="chev-ci">&#8964;</span>
+      </div>
+      <div class="thread-body" id="body-ci">
+        <div class="thread-post">
+          <p class="post-date">April 3, 2026</p>
+          <h3 class="post-title">CI 3: I Saw It with My Own Eyes... But Did You?</h3>
+          <div class="post-text">
+            <p>Let me ask you a question: if someone says "I saw them do it," would you believe them? Most people would instinctively say yes. After all, seeing is believing, right? Eyewitness testimony has long been considered one of the most powerful forms of evidence in the American legal system. But the reality is that human memory is far from perfect. It is surprisingly fragile and easily influenced.</p>
+            <p>Memory does not work like a video recording. It is more like a reconstruction. Every time we recall an event, our brain is actively piecing it back together, and that process can be affected by stress, time, and outside influences. In high-stress situations like witnessing a crime, your brain is not focused on capturing perfect details. It is focused on survival. On top of that, memory can be influenced after the event has occurred. Leading questions, conversations with other witnesses, or media coverage can unintentionally alter how someone remembers what they saw. A confident witness can be incredibly persuasive to a jury, even if their memory is inaccurate. Confidence does not equal accuracy. But in a trial setting, it can be very hard to tell the difference.</p>
+          </div>
+        </div>
+        <div class="thread-post">
+          <p class="post-date">April 16, 2026</p>
+          <h3 class="post-title">CI 5: Justice... or Is It Something We Are Still Working Toward?</h3>
+          <div class="post-text">
+            <p>Over the past few weeks we have unpacked a lot together. We talked about the justice gap and how access to legal representation can completely shape someone's outcome. We looked at eyewitness testimony and how something that feels so reliable can actually be deeply flawed. Then we explored juries and how even well-meaning people carry unconscious biases into the courtroom. So now I want to ask a bigger question: when you put all these pieces together, how fair is the system really?</p>
+            <p>Imagine someone who cannot afford strong legal representation. Now add inaccurate eyewitness testimony delivered confidently to a jury. Then place that case in front of jurors who, without even realizing it, interpret the defendant's appearance through their own biases. Individually, each of these factors is concerning. Together? Overwhelming. The justice system is often presented as something objective, rooted in facts and fairness. But in reality it is built and carried out by people. And people, no matter how well-intentioned, are imperfect. What matters most is awareness. Once we recognize these patterns we can begin to ask better questions. Justice is not just about what happens in a courtroom. It is also about how we, as a society, understand and engage with the system itself.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- BEYOND RCL -->
+<div id="page-beyond" class="page">
+  <div class="section-page">
+    <div class="section-header">
+      <p class="section-tag">Beyond RCL &middot; First Year at Penn State</p>
+      <h2 class="section-title">The Bigger Picture: <em>A Wider Year</em></h2>
+      <p class="section-desc">RCL was not the only place I was writing and thinking this year. These pieces from my Psychology and Criminology courses show the full arc of my intellectual interests as a pre-law student.</p>
+    </div>
+    <div class="cards-grid cols-2">
+
+      <div class="card" onclick="showEssay('psych')">
+        <div class="card-image psych">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M24 8C16.268 8 10 14.268 10 22c0 4.418 2.01 8.364 5.172 11H32.828C35.99 30.364 38 26.418 38 22c0-7.732-6.268-14-14-14z" stroke="#7A5C5A" stroke-width="1.4"/><path d="M18 33v4a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3v-4" stroke="#7A5C5A" stroke-width="1.2"/><path d="M24 15v7l4 3" stroke="#7A5C5A" stroke-width="1.2" stroke-linecap="round"/></svg>
+          <span class="card-pill">Psychology Blog Series</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Memory, Perception, and the Mind</h3>
+          <p class="card-blurb">Three psychology blog posts drawn from lived experience: retrograde amnesia after a car accident, navigating the world with limited depth perception, and understanding what OCD actually looks like from the inside.</p>
+          <div class="card-footer"><span class="card-type">Psychology &middot; Blog Series</span><span class="card-arr">&#8594;</span></div>
+        </div>
+      </div>
+
+      <div class="card" onclick="showEssay('crim')">
+        <div class="card-image law">
+          <svg class="card-icon" viewBox="0 0 48 48" fill="none"><path d="M8 36V14l16-8 16 8v22l-16 8-16-8z" stroke="#5C7A57" stroke-width="1.4" stroke-linejoin="round"/><path d="M24 6v36M8 14l16 8 16-8" stroke="#5C7A57" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <span class="card-pill">Criminology</span>
+        </div>
+        <div class="card-body">
+          <h3 class="card-title">Opportunity Theories: Why Crime Happens Where It Does</h3>
+          <p class="card-blurb">A criminology theory portfolio exploring Routine Activities Theory, Rational Choice, Situational Crime Prevention, and Broken Windows, asking not who commits crime, but what conditions make it possible.</p>
+          <div class="card-footer"><span class="card-type">Criminology &middot; Theory Portfolio</span><span class="card-arr">&#8594;</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="page-essay" class="page">
+  <div class="essay-page">
+    <button class="back-btn" onclick="goBack()">&#8592; Back</button>
+    <p class="essay-tag" id="essay-tag"></p>
+    <h2 class="essay-title" id="essay-title"></h2>
+    <p class="essay-blurb" id="essay-blurb"></p>
+    <div id="essay-content"></div>
+  </div>
+</div>
+
+<footer>
+  <p>Sara Tucher &nbsp;&middot;&nbsp; Penn State University &nbsp;&middot;&nbsp; <a href="mailto:sjt6067@psu.edu">sjt6067@psu.edu</a> &nbsp;&middot;&nbsp; RCL E-Portfolio 2024-2025</p>
+</footer>
+
+<script>
+const essays = {
+  advocacy: {
+    tag: 'Advocacy Project &middot; Multimedia Website',
+    title: 'On the Record: Mandating Continuous Police Recording',
+    blurb: 'This advocacy project makes the case for mandatory, uninterrupted recording of all police interrogations and encounters. When there is no complete record, the door opens to misinterpretation and injustice. This is not about targeting law enforcement. It is about making sure the truth has a witness.',
+    content: `<div class="embed-box"><p class="embed-label">Full Advocacy Site</p><iframe src="https://saratucher-art.github.io/on-the-record/" height="520"></iframe></div><p style="font-size:0.83rem;color:var(--text-light);margin-top:0.6rem;">If the embed does not load, <a href="https://saratucher-art.github.io/on-the-record/" target="_blank" style="color:var(--sage-dark);">open the full site here</a>.</p>`
+  },
+  history: {
+    tag: 'History of a Public Controversy &middot; Multimedia',
+    title: 'Standardized Testing: A History Worth Questioning',
+    blurb: 'Tracing the arc of standardized testing in America, from its origins through the COVID-19 era when universities discovered they could measure student potential without it. If we proved we could do without it, why did we go back? This project examines the rhetoric, history, and legitimacy of a system millions of students navigate every year.',
+    content: `<div class="embed-box"><p class="embed-label">Watch the Multimedia Project</p><div style="position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;"><iframe src="https://www.youtube.com/embed/6wgWOzpgLiQ" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe></div></div>`
+  },
+  thisIBelieve: {
+    tag: 'This I Believe &middot; Essay and Podcast',
+    title: 'This I Believe: The Importance of Music',
+    blurb: 'A personal essay and recorded podcast in the tradition of NPR\'s This I Believe series. Writing and recording this piece asked me to do something harder than arguing a legal case: to find words for something I feel at a gut level, and then let people hear my voice say it out loud.',
+    content: `<div class="essay-body">
+      <p>When I was a kid, much like many of us, I thought one of my biggest flaws was being loud. I talked too much. Laughed too hard. I took up space in rooms that did not always want me to. Then one day someone handed me a baton, looked me in the eye and said, "alright, now be louder." In front of everyone.</p>
+      <p>I am a musician, and if you could not already tell, I have never really been the quiet type. But music was the one place that never asked me to shrink. I will never forget what one of my mentors used to say: "why sit in a room full of silence when we could fill it with sound?" This idea changed everything for me, and this is why I believe in the importance of music.</p>
+      <p>At the ripe old age of three, my mom looked at me, an already obnoxious child, and decided the best solution was to let me choose an instrument. I began playing the flute and piccolo, later adding cello and piano. Piccolo is one of the loudest instruments out there, so it fits me pretty perfectly.</p>
+      <p>By seventh grade, I auditioned for my school's marching band. I was very young and had to prove I could handle the music and the pressure. I remember walking into that room full of adults, being asked to sight-read music I had never seen before. It was incredibly scary. But I did it. I got in. And for the first time I proved to myself I could do what I strived for.</p>
+      <p>When junior year rolled around, I wrote a proposal to my director pleading for a chance to prove I could lead. I auditioned for drum major. With only one year in the program, I got the position. And then he quit. Suddenly I was thrown into a leadership role I was not fully ready for, surrounded by traditions I did not fully understand, with a brand new director no one fully trusted.</p>
+      <p>I raised my hands and counted off. What followed was one of the best seasons of my life. Music gave me not only confidence but unwavering leadership.</p>
+      <p>One experience I will never forget is playing in Ireland. I sat first chair flute and piccolo in a cathedral full of hundreds of people, surrounded by musicians I barely knew, languages I did not understand. Yet the moment the first chord rang out, it was almost like nothing mattered and everything made sense. Music did not need translation. It was something everyone could enjoy and understand together. As the final notes faded, everyone seemed to pause for just a second to take in what we had all just shared. Then came the eruption of applause.</p>
+      <p>You do not need to be a musician to understand this. We have all had that one song, the one that gives us goosebumps, makes us cry, helps us study, or pushes us through a tough workout. Because music is universal. It connects us, challenges us, and reminds us that being loud is not a flaw. It is a gift. And that is what I believe.</p>
+    </div>
+    <div class="embed-box" style="margin-top:1.8rem;"><p class="embed-label">Watch on YouTube</p><div style="position:relative;padding-bottom:56.25%;height:0;border-radius:8px;overflow:hidden;"><iframe src="https://www.youtube.com/embed/qNz0T5SzwxQ" style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;" allowfullscreen></iframe></div></div>`
+  },
+  paradigm: {
+    tag: 'Paradigm Shift Essay &middot; CAS 137H',
+    title: 'The Illusion of Evidence',
+    blurb: 'From the earliest courtrooms where eyewitness testimony was considered sacred, to the invention of photography, to the rise of AI-generated deepfakes, this essay traces how society\'s definition of truth has shifted across three eras. The stakes are not abstract: in a world where convincingly fake video might convict an innocent person, sight no longer suffices.',
+    content: `<div class="essay-body">
+      <p>You are sitting quietly in a courtroom. The prosecution begins by playing what appears to be a crystal-clear video of the defendant committing the crime for which they are accused. For a moment, the verdict feels inevitable. Yet what if that video was never recorded by a camera, but generated by an algorithm in less than an hour? What you believed you saw simply never happened.</p>
+      <p>For centuries society built its notion of truth on the assumption that "seeing is believing." First, humans trusted their own senses. Then, the invention of the camera convinced both courts and the public that sight could capture objective reality. Today, artificial intelligence has upended that certainty. In the modern era, courts, journalists, and ordinary citizens must treat what they see as the beginning of evidence, not its conclusion.</p>
+      <h3>Era One: Human Perception</h3>
+      <p>From the earliest ages of trial by oath, human perception functioned as proof. Eyewitness testimony was sacred. But time and psychology alike revealed the frailty of human memory, that every act of recall subtly rewrites what was originally perceived. Organizations such as the Innocence Project show how catastrophic that flaw has been: over 70% of the more than 300 wrongful convictions later overturned by DNA evidence involved eyewitness misidentification. These are not abstract statistics. These are real people whose lives were derailed because our fundamental trust in "seeing and remembering" was misplaced.</p>
+      <h3>Era Two: Photographic Trust</h3>
+      <p>As wariness of memory fallibility grew, the invention of photography in 1839 offered a new hope: a frozen moment that could survive beyond flawed human minds. By the 1860s, photographs appeared routinely in American and British courtrooms. Jurors who once weighed conflicting accounts were suddenly given silent, impartial witnesses in the form of images. A photograph was taken as mechanical objectivity, the golden standard of evidence. For nearly two centuries, cameras served as society's collective memory.</p>
+      <h3>Era Three: The AI Illusion</h3>
+      <p>Since roughly 2015, artificial intelligence has revolutionized the creation of images, video, and audio, making it possible to fabricate scenes so convincingly that even experts struggle to distinguish them from reality. Deepfake production has increased by 900% over the past five years. The consequences are beginning to appear in courtrooms. In Mendones v. Cushman and Wakefield, a California court formally rejected video evidence after detecting signs of AI generation. The judge warned that accepting such evidence without rigorous forensic validation would threaten the integrity of the entire judicial system.</p>
+      <p>The old maxim "seeing is believing" no longer reflects today's reality. Vision can be simulated, fabricated, and faked. The truth today demands more than sight. It requires verification, vigilance, skepticism, transparency, and above all, accountability. If we fail to adapt, clinging to obsolete standards, the truth itself may become a casualty. We as a society must rise to the challenge: because in a world where anything can be faked, everything must be proven.</p>
+    </div>`
+  },
+  brief: {
+    tag: 'Deliberation &middot; Issue Brief',
+    title: 'WE ARE!... But Are We Really Happy and Healthy in Happy Valley?',
+    blurb: 'The research foundation for our class deliberation on student health and wellness at Penn State. This issue brief maps three approaches to improving campus wellbeing, examining the benefits, drawbacks, and practical steps behind each before we entered structured public dialogue.',
+    content: `<div class="essay-body">
+      <p>At Penn State, students arrive with ambition, goals, and the expectation that college will shape both their futures and their identities. However, health and wellness are often overlooked as central components of academic and personal success. In an environment defined by rigorous coursework, social pressures, and increasing independence, many students struggle to balance their mental, physical, and emotional well-being. Improving health and wellness at Penn State is not simply about comfort. It is about creating conditions in which all students can truly thrive.</p>
+      <h3>Approach 1: Reduce Academic Pressures</h3>
+      <p>At a university as large and competitive as Penn State, academic pressure is often seen as normal or even necessary. But there is a difference between productive challenges and chronic stressors. This approach focuses on rethinking how we measure learning, shifting away from high-stakes one-shot exams and toward more iterative, applied, and meaningful forms of assessment. Possible steps include encouraging departments to replace some high-stakes exams with project-based assessments, portfolio submissions, applied case studies, and presentation-based evaluations. The goal is not to lower standards. It is to promote deeper understanding, stronger retention, and healthier student wellness.</p>
+      <h3>Approach 2: Community</h3>
+      <p>While college presents a unique opportunity for students to establish themselves as individuals, they are also being separated from their home support systems. This transition can prove dangerous for student health. Isolation has been shown to decrease physical health by discouraging healthy habits and increasing stress. Strong social networks, by contrast, strengthen mental and physical health and encourage healthy habits in all areas of life. Possible steps include better advertisement of clubs and organizations, increased frequency and variety of recreational activities in residence halls, improved community spaces, and health check-ins with RAs or peers.</p>
+      <h3>Approach 3: Expanding Resources Across Campus</h3>
+      <p>At a large institution like Penn State, resources technically exist, but access is not always equal. Gyms, dining halls, advisors, and academic support are available, but these resources vary in cost, location, availability, and convenience. For many students, barriers like pricing, scheduling conflicts, crowded facilities, or lack of awareness prevent them from fully utilizing what is offered. This approach focuses on reducing those barriers so wellness, academic support, and career guidance are not dependent on any given student's meal plan, housing location, or financial flexibility.</p>
+    </div>`
+  },
+  postdelib: {
+    tag: 'Post-Deliberation &middot; Letter to University Leadership',
+    title: 'Dear President Bendapudi and Board of Trustees',
+    blurb: 'A formal letter written after our class deliberation on student health and wellness at Penn State. Addressed to President Bendapudi and the Board of Trustees, this letter summarizes what our structured public dialogue revealed and calls for meaningful, thoughtful action.',
+    content: `<div class="essay-body">
+      <p>On March 3rd, 2026, a group of approximately 25 students in CAS 138T at Penn State University Park participated in a structured deliberation examining student health and wellness on the University Park campus. Although Penn State prides itself on being "Happy Valley," many students expressed concerns that maintaining mental, physical, and emotional health has become increasingly difficult. Three key themes emerged from our discussion.</p>
+      <h3>Academic Pressure and Student Well-Being</h3>
+      <p>While most participants acknowledged that challenging coursework is necessary for learning and future success, many described feeling that grades and exams dominate their college experience. High-stakes testing can encourage memorization rather than true learning, leading to short-term stress rather than long-term academic growth. Students expressed enthusiasm for more project-based learning like presentations or applied assignments. These changes would not require lowering academic standards. They promote the type of critical thinking and problem-solving that universities seek to cultivate and jobs often expect.</p>
+      <h3>Community and Belonging</h3>
+      <p>Our deliberation highlighted the powerful influence that community and belonging have on student health. Many participants described loneliness as a very real challenge at such a large university. Despite being surrounded by thousands of peers, it can be incredibly difficult for students to form meaningful relationships or feel like they truly belong here. Students mentioned strong support for initiatives that make it easier to build community: improving promotion of clubs and activities, hosting more residence hall programming, and encouraging peer-led events.</p>
+      <h3>Structural Barriers to Resources</h3>
+      <p>The most consistent theme involved structural barriers preventing the average student from fully using existing campus resources. A lot of participants acknowledged that Penn State offers a wide range of services. However, many felt these resources are not always equally accessible. Gym facilities often become overcrowded at peak hours. Healthier food choices can be more expensive and harder to access. Students described challenges with scheduling advisor meetings when class schedules conflict with available appointment slots. These barriers discourage students from seeking help or participating in activities that support their well-being.</p>
+      <p>These themes all suggest that improving health and wellness at Penn State is not about one dramatic change, but about meaningful progress through thoughtful adjustments. Penn State has long emphasized its commitment to student success. By continuing to listen to student perspectives and implementing policies that promote both academic rigor and wellness, the university can ensure that "Happy Valley" truly reflects the lived experiences of its students.</p>
+      <p style="margin-top:1.5rem;font-style:italic;color:var(--text-dark);">Sincerely,<br>Sara Tucher<br>Student, College of The Liberal Arts, Penn State University.</p>
+    </div>`
+  },
+  psych: {
+    tag: 'Psychology &middot; Blog Series',
+    title: 'Memory, Perception, and the Mind: Three Personal Posts',
+    blurb: 'Three psychology blog posts written from lived experience, connecting course concepts to my own life. From retrograde amnesia after a car accident, to navigating the world without depth perception, to what it actually feels like to live with OCD, these posts are where textbook psychology became personal.',
+    content: `<div class="essay-body">
+      <h3>Can YOU Remember?</h3>
+      <p>Most people think of memory as a recording device: you experience something, your brain stores it, and you can replay it whenever you want. I used to think that too, until I got a concussion and it changed a lot about what I could and could not remember. Right after I was in a car accident, something strange happened: my first and hopefully only run-in with retrograde amnesia. I could not remember my mom's phone number to call her, but I could remember my sister's. I also struggled to recall everyday routines I had performed hundreds of times before. When I played my instrument, I could understand notes and rhythms but I could not remember note names. I just knew the fingerings associated with them. It felt like parts of my knowledge were still there, but the path to access them was gone.</p>
+      <p>This is retrograde amnesia: a temporary loss of memories formed before an injury. Unlike how movies show it, amnesia does not erase a person's entire identity. It affects specific memories because different types are stored in different brain systems. My injury mostly interfered with retrieval. My brain had trouble pulling certain memories back out of long-term storage. That explains why I recognized things when someone reminded me, but could not independently recall them. Over time I slowly regained the memories I had lost. This experience really changed how I think about memory. Memory is not a perfect recording or permanent file cabinet. It is a biological process. Memory is not just something we have. It is something our brain works incredibly hard for.</p>
+      <h3>Depth Perception: It's Not What You Think</h3>
+      <p>Depth perception is something most people do not think twice about because it allows us to judge how far away objects are and interact with the world smoothly. In my case, I barely have any depth perception because my eyes do not fully communicate with one another, which limits my ability to use binocular cues. Without these I rely much more on monocular cues, which only require one eye. These include motion parallax (how objects appear to move at different speeds depending on distance) and texture gradients (judging distance based on how detailed an object appears). These cues are not as precise as binocular vision, which becomes especially noticeable in sports like tennis or pickleball. Even without binocular cues I can navigate normally. It demonstrates that perception is not just about what we see, but how our brain interprets that information.</p>
+      <h3>It Is Not What You Think: Living with OCD</h3>
+      <p>One of the biggest misconceptions I have seen and experienced: people joke "I am so OCD" when they clean their room. But for me it is not that simple. If someone sits in my desk chair, I feel like I have to clean it before I can use it again, even if they sat there for just a moment. Every time I get gas I catch myself tapping the nozzle three times, not because it makes any sense, but because it feels like something terrible will happen if I do not. I know those thoughts are irrational. But that does not make them go away. OCD is not just about actions. It is about the constant mental negotiations happening underneath them: intrusive thoughts paired with irrational compulsions. From my own experience, coping does not mean the thoughts magically disappear. It means finding other ways to manage the anxiety instead of always relying on the compulsions. It is not a perfect fix. But it is progress.</p>
+    </div>`
+  },
+  crim: {
+    tag: 'Criminology &middot; Theory Portfolio',
+    title: 'Opportunity Theories: Why Crime Happens Where It Does',
+    blurb: 'A criminology theory portfolio examining Routine Activities Theory, Rational Choice Theory, Situational Crime Prevention, and Broken Windows Theory. Rather than asking who commits crime, these frameworks ask what conditions make crime possible, and what we can change about those conditions.',
+    content: `<div class="essay-body">
+      <p>Routine Activities Theory, developed by Cohen and Felson in 1979, offers a powerful way to understand crime by shifting focus from why individuals commit crimes to the circumstances under which they occur. Rather than viewing crime as the result of abnormal individuals, this perspective assumes that crime is a normal part of everyday life and is largely shaped by patterns of routine behavior.</p>
+      <h3>The Three Elements</h3>
+      <p>At the core of Routine Activities Theory are three elements that must converge for a crime to occur: a motivated offender, a suitable target, and the absence of a capable guardian. A motivated offender is anyone willing to commit a crime, which the theory assumes will always exist in society. A suitable target is any person or object that is attractive and accessible. A capable guardian is any person or mechanism that can prevent crime, such as police officers, security systems, or attentive neighbors. This theory argues that crime is not necessarily driven by an increase in criminal motivation, but rather by changes in everyday routines that bring these three elements together more frequently.</p>
+      <h3>Historical Context</h3>
+      <p>Cohen and Felson developed their theory in response to historical patterns observed in the United States following World War II. After the war, crime rates increased even as economic conditions improved, which challenged traditional explanations linking crime to poverty. Shifts in routine activities, such as the increase of women in the workforce, led to more opportunities for crime. Empty homes during the day became easier targets for burglary, illustrating how social changes can unintentionally increase crime by altering daily patterns.</p>
+      <h3>Connections to Other Theories</h3>
+      <p>Routine Activities Theory is closely related to Rational Choice Theory, as both emphasize decision-making and opportunity. Rational choice suggests that offenders weigh costs and benefits before committing a crime. Routine Activities Theory complements this by explaining when those opportunities arise. Situational Crime Prevention builds directly on these ideas by focusing on reducing opportunities through environmental changes: installing locks, improving surveillance, increasing lighting. Broken Windows Theory similarly emphasizes the role of guardianship and environmental cues. When an area appears unmonitored or disorderly, motivated offenders are more likely to act.</p>
+      <p>The entirety of Routine Activities Theory contributes significantly to our understanding of crime by showing that crime is not just about the individual, but also about the opportunities created by our everyday lives. Crime can often be heavily reduced not by changing people, but by changing the conditions that make crime possible.</p>
+    </div>`
+  }
+};
+
+let prevPage = 'home';
+
+function showPage(id) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-' + id).classList.add('active');
+  const nav = document.getElementById('nav-' + id);
+  if (nav) nav.classList.add('active');
+  prevPage = id;
+  window.scrollTo(0,0);
+}
+
+function showEssay(key) {
+  const e = essays[key];
+  if (!e) return;
+  document.getElementById('essay-tag').innerHTML = e.tag;
+  document.getElementById('essay-title').innerHTML = e.title;
+  document.getElementById('essay-blurb').textContent = e.blurb;
+  document.getElementById('essay-content').innerHTML = e.content;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
+  document.getElementById('page-essay').classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function goBack() { showPage(prevPage); }
+
+function toggleThread(id) {
+  document.getElementById('tc-' + id).classList.toggle('open');
+}
+</script>
+</body>
+</html>
